@@ -95,6 +95,13 @@ sources:
                   arguments:
                     to: source('raw', 'units_of_measure')
                     field: uom_id
+          - name: is_active
+            description: Находится ли продукт в продаже.
+            tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: [true, false]
       - name: users
         description: Профили зарегистрированных клиентов.
         columns:
@@ -120,6 +127,13 @@ sources:
               - not_null
           - name: updated_at
             description: Дата обновления (для инкрементальной загрузки).
+          - name: is_deleted
+            description: Удалён ли аккаунт клиента.
+            tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: [true, false]
       - name: units_of_measure
         description: Единицы измерения товаров.
         columns:

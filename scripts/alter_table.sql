@@ -41,3 +41,7 @@ ALTER TABLE raw.products ADD COLUMN uom_id INT;
 ALTER TABLE raw.products
     ADD CONSTRAINT fk_products_uom FOREIGN KEY (uom_id)
     REFERENCES raw.units_of_measure(uom_id);
+
+-- добавление полей is_deleted
+ALTER TABLE raw.users ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+ALTER TABLE raw.products ADD COLUMN is_active BOOLEAN DEFAULT FALSE;
