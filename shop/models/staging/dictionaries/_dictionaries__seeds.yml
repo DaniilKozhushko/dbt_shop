@@ -1,0 +1,46 @@
+seeds:
+  - name: categories
+    description: Категории товаров.
+    config:
+      column_types:
+        category_id: int
+        name: varchar(10)
+    columns:
+      - name: category_id
+        description: Уникальный номер категории.
+        tests: [not_null, unique]
+      - name: name
+        description: Название категории.
+        tests:
+          - not_null
+  - name: statuses
+    description: Статусы заказов.
+    config:
+      column_types:
+        status_id: int
+        name: varchar(22)
+    columns:
+      - name: status_id
+        description: Уникальный номер статуса.
+        tests: [not_null, unique]
+      - name: name
+        description: Название статуса.
+        tests:
+          - not_null
+  - name: units_of_measure
+    description: Единицы измерения.
+    config:
+      column_types:
+        uom_id: int
+        name: varchar(9)
+        short_name: varchar(3)
+    columns:
+      - name: uom_id
+        description: Уникальный номер единицы измерения.
+        tests: [not_null, unique]
+      - name: name
+        description: Название единицы измерения.
+        tests: [not_null, unique]
+      - name: short_name
+        description: Сокращённое название единицы измерения.
+        tests: [not_null, unique]

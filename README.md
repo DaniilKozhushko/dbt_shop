@@ -26,10 +26,9 @@
 24. Добавление packages.yml и запуск dbt deps
 25. Изменение схемы БД на основе таблицы units_of_measure
 26. Добавление полей is_deleted, обновление моделей
-
-
-TODO добавить seed units_of_measure
-TODO добавить модели для seeds
+27. Создание seed units_of_measure.csv
+28. Создание моделей для seeds
+29. Создание конфигурационного файла для моделей seeds
 
 TODO добавить категории товаров: personal care, pet supplies, baby food, organic & healthy food
 TODO добавить номер телефона в схему таблицы пользователей

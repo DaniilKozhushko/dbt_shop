@@ -19,9 +19,3 @@ models:
   shop:
     staging:
       +materialized: view
-      +schema: analytics
-    intermediate:
-      +materialized: ephemeral
-    marts:
-      +materialized: table
-      +schema: analytics

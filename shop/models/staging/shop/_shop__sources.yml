@@ -59,6 +59,10 @@ sources:
             description: Ссылка на текущий статус заказа.
             tests:
               - not_null
+              - relationships:
+                  arguments:
+                    to: ref("statuses")
+                    field: status_id
           - name: order_date
             description: Дата и время создания заказа.
             tests:
@@ -81,6 +85,10 @@ sources:
             description: Ссылка на категорию товара.
             tests:
               - not_null
+              - relationships:
+                  arguments:
+                    to: ref("categories")
+                    field: category_id
           - name: price
             description: Текущая розничная цена в магазине.
             tests:
@@ -93,7 +101,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: source('raw', 'units_of_measure')
+                    to: ref("units_of_measure")
                     field: uom_id
           - name: is_active
             description: Находится ли продукт в продаже.
@@ -134,21 +142,3 @@ sources:
               - accepted_values:
                   arguments:
                     values: [true, false]
-      - name: units_of_measure
-        description: Единицы измерения товаров.
-        columns:
-          - name: uom_id
-            description: Уникальный идентификатор единицы измерения.
-            tests:
-              - not_null
-              - unique
-          - name: name
-            description: Полное название единицы измерения.
-            tests:
-              - not_null
-              - unique
-          - name: short_name
-            description: Сокращённое название единицы измерения.
-            tests:
-              - not_null
-              - unique
