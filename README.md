@@ -16,5 +16,10 @@
 14. Изменение лимита символов в таблицах
 15. Создание папок иерархии - staging, intermediate, marts
 16. Создание raw моделей в staging
+17. Добавление документации в raw модели
+18. Обновление схемы таблицы order_items
+19. Добавление ограничений в таблицы
+20. Обновление raw модели stg_shop__order_items.sql
 
 TODO добавить категории товаров: personal care, pet supplies, baby food, organic & healthy food
+TODO добавить номер телефона в схему таблицы пользователей

@@ -1,8 +1,57 @@
 sources:
   - name: raw
+    description: Данные из БД онлайн-магазина
     database: shop_db
     tables:
       - name: order_items
+        description: Детализация заказов (строки чека).
+        columns:
+          - name: order_id
+            description: Ссылка на родительский заказ.
+          - name: product_id
+            description: Ссылка на проданный товар.
+          - name: quantity
+            description: Количество единиц товара в строке.
+          - name: price_at_purchase
+            description: Зафиксированная цена в момент покупки.
       - name: orders
+        description: Заголовки транзакций (факт совершения заказа и его текущее состояние).
+        columns:
+          - name: order_id
+            description: Уникальный номер заказа.
+          - name: user_id
+            description: Идентификатор клиента, совершившего покупку.
+          - name: status_id
+            description: Ссылка на текущий статус заказа.
+          - name: order_date
+            description: Дата и время создания заказа.
+          - name: updated_at
+            description: Дата обновления (для инкрементальной загрузки).
       - name: products
+        description: Актуальный каталог товаров магазина с текущими ценами.
+        columns:
+          - name: product_id
+            description: Уникальный идентификатор товара (SKU).
+          - name: name
+            description: Коммерческое наименование товара.
+          - name: category_id
+            description: Ссылка на категорию товара.
+          - name: price
+            description: Текущая розничная цена в магазине.
+          - name: updated_at
+            description: Дата обновления (для инкрементальной загрузки).
       - name: users
+        description: Профили зарегистрированных клиентов.
+        columns:
+          - name: user_id
+            description: Уникальный идентификатор клиента.
+          - name: first_name
+            description: Имя клиента.
+          - name: last_name
+            description: Фамилия клиента.
+          - name: email
+            description: Адрес электронной почты клиента.
+          - name: address
+            description: Текущий почтовый адрес клиента.
+          - name: updated_at
+            description: Дата обновления (для инкрементальной загрузки).
