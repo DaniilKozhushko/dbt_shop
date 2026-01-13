@@ -16,7 +16,7 @@ ALTER TABLE raw.products
     ALTER COLUMN category_id  SET NOT NULL,
     ALTER COLUMN price SET NOT NULL;
 ALTER TABLE raw.orders
-    ALTER COLUMN order_id SET NOT NULL,
+    ALTER COLUMN user_id SET NOT NULL,
     ALTER COLUMN status_id  SET NOT NULL,
     ALTER COLUMN order_date SET NOT NULL;
 ALTER TABLE raw.order_items
@@ -27,3 +27,17 @@ ALTER TABLE raw.order_items
 ALTER TABLE raw.order_items DROP CONSTRAINT order_items_pkey;
 ALTER TABLE raw.order_items DROP COLUMN order_item_id;
 ALTER TABLE raw.order_items ADD PRIMARY KEY (order_id, product_id);
+
+-- добавление ограничения больше 0
+ALTER TABLE raw.order_items ADD CONSTRAINT quantity_min_check CHECK (quantity > 0);
+
+-- изменение типа данных в столбце
+ALTER TABLE raw.order_items ALTER COLUMN quantity TYPE DECIMAL(10, 3);
+
+-- добавление нового столбца
+ALTER TABLE raw.products ADD COLUMN uom_id INT;
+
+-- добавление связи
+ALTER TABLE raw.products
+    ADD CONSTRAINT fk_products_uom FOREIGN KEY (uom_id)
+    REFERENCES raw.units_of_measure(uom_id);

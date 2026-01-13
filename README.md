@@ -20,6 +20,14 @@
 18. Обновление схемы таблицы order_items
 19. Добавление ограничений в таблицы
 20. Обновление raw модели stg_shop__order_items.sql
+21. Проверка документации dbt docs generate, dbt docs serve
+22. Добавление таблицы units_of_measure и её модели
+23. Добавление тестов для столбцов и моделей
+24. Добавление packages.yml и запуск dbt deps
+25. Изменение схемы БД на основе таблицы units_of_measure
+
+TODO добавить seed units_of_measure
+TODO добавить модели для seeds
 
 TODO добавить категории товаров: personal care, pet supplies, baby food, organic & healthy food
 TODO добавить номер телефона в схему таблицы пользователей

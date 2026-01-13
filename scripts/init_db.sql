@@ -49,3 +49,10 @@ CREATE TABLE raw.order_items (
     quantity INT,
     price_at_purchase DECIMAL(10, 2) -- фикс цены в момент покупки
 );
+
+-- единицы измерения
+CREATE TABLE raw.units_of_measure (
+    uom_id INT PRIMARY KEY,
+    name VARCHAR(9) NOT NULL,
+    short_name VARCHAR(3) NOT NULL
+);
