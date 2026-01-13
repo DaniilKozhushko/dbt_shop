@@ -1,0 +1,5 @@
+status_id,name
+1,new
+2,shipped
+3,delivered
+4,cancelled
