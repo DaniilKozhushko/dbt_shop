@@ -13,6 +13,8 @@
 11. Обновление dbt seed
 12. Добавление новых категорий в categories.csv
 13. Обновление dbt seed --select categories
+14. Изменение лимита символов в таблицах
+15. Создание папок иерархии - staging, intermediate, marts
+16. Создание raw моделей в staging
 
-TODO добавить категории товаров с обновлением схемы (увеличить VARCHAR(10))
 TODO добавить категории товаров: personal care, pet supplies, baby food, organic & healthy food
