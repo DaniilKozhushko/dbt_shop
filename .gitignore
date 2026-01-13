@@ -1,0 +1,6 @@
+dbt_venv/
+logs/
+target/
+dbt_packages/
+*.pyc
+.env
