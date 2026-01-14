@@ -29,6 +29,44 @@
 27. Создание seed units_of_measure.csv
 28. Создание моделей для seeds
 29. Создание конфигурационного файла для моделей seeds
+30. Рефакторинг конфигурации seeds
+31. Разделение на несколько веток разработки: dev, prod, test
+
+TODO написать генерацию данных на python
 
 TODO добавить категории товаров: personal care, pet supplies, baby food, organic & healthy food
 TODO добавить номер телефона в схему таблицы пользователей
+
+#### profiles.yml:
+```yml
+shop:
+  target: dev
+  outputs:
+    prod:
+      dbname: shop_db
+      host: localhost
+      pass: dbt_password
+      port: 5433
+      schema: analytics
+      threads: 4
+      type: postgres
+      user: dbt_user
+    test:
+      dbname: shop_db
+      host: localhost
+      pass: dbt_password
+      port: 5433
+      schema: analytics_test
+      threads: 4
+      type: postgres
+      user: dbt_user
+    dev:
+      dbname: shop_db
+      host: localhost
+      pass: dbt_password
+      port: 5433
+      schema: analytics_dev
+      threads: 4
+      type: postgres
+      user: dbt_user
+```
