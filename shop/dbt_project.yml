@@ -38,3 +38,12 @@ seeds:
         uom_id: int
         name: varchar(50)
         short_name: varchar(10)
+
+    products:
+      +column_types:
+        product_id: int
+        name: varchar(255)
+        category_id: int
+        price: numeric(10, 2)
+        updated_at: timestamp
+        is_active: boolean
