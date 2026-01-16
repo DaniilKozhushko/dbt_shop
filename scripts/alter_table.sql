@@ -45,3 +45,8 @@ ALTER TABLE raw.products
 -- добавление полей is_deleted
 ALTER TABLE raw.users ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
 ALTER TABLE raw.products ADD COLUMN is_active BOOLEAN DEFAULT FALSE;
+
+-- добавление индексов
+CREATE INDEX idx_raw_orders_order_id ON raw.orders(order_id);
+CREATE INDEX idx_raw_order_items_order_id ON raw.order_items(order_id);
+CREATE INDEX idx_raw_products_product_id ON raw.products(product_id);

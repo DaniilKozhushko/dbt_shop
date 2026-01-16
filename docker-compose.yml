@@ -6,6 +6,7 @@ services:
       POSTGRES_USER: dbt_user
       POSTGRES_PASSWORD: dbt_password
       POSTGRES_DB: shop_db
+    shm_size: 2gb
     ports:
       - "5433:5432"
     volumes:

@@ -3,7 +3,9 @@ sources:
     database: shop_db
     schema: raw
     description: Данные из БД онлайн-магазина
+
     tables:
+
       - name: order_items
         description: Детализация заказов (строки чека).
         tests:
@@ -39,8 +41,16 @@ sources:
             description: Зафиксированная цена в момент покупки.
             tests:
               - not_null
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: 0
+
       - name: orders
         description: Заголовки транзакций (факт совершения заказа и его текущее состояние).
+        freshness:
+          warn_after: {count: 365, period: day}
+          error_after: {count: 700, period: day}
+        loaded_at_field: updated_at
         columns:
           - name: order_id
             description: Уникальный номер заказа.
@@ -61,7 +71,7 @@ sources:
               - not_null
               - relationships:
                   arguments:
-                    to: ref("statuses")
+                    to: source('raw', 'statuses')
                     field: status_id
           - name: order_date
             description: Дата и время создания заказа.
@@ -69,6 +79,9 @@ sources:
               - not_null
           - name: updated_at
             description: Дата обновления (для инкрементальной загрузки).
+            tests:
+              - not_null
+
       - name: users
         description: Профили зарегистрированных клиентов.
         columns:
@@ -81,6 +94,7 @@ sources:
             description: Имя клиента.
             tests:
               - not_null
+              - dbt_utils.not_empty_string
           - name: last_name
             description: Фамилия клиента.
           - name: email
@@ -88,12 +102,19 @@ sources:
             tests:
               - not_null
               - unique
+              - dbt_utils.not_empty_string
+              - dbt_utils.expression_is_true:
+                  arguments:
+                    expression: "~* '^[a-z]+[0-9]+@[a-z]+\\.(com|ru|kz)$'"
           - name: address
             description: Текущий почтовый адрес клиента.
             tests:
               - not_null
+              - dbt_utils.not_empty_string
           - name: updated_at
             description: Дата обновления (для инкрементальной загрузки).
+            tests:
+              - not_null
           - name: is_deleted
             description: Удалён ли аккаунт клиента.
             tests:
@@ -101,6 +122,8 @@ sources:
               - accepted_values:
                   arguments:
                     values: [true, false]
+                    quote: false
+
       - name: products
         description: Актуальный каталог товаров магазина с текущими ценами.
         columns:
@@ -113,22 +136,31 @@ sources:
             description: Коммерческое наименование товара.
             tests:
               - not_null
+              - dbt_utils.not_empty_string
           - name: category_id
             description: Ссылка на категорию товара.
             tests:
               - not_null
+              - relationships:
+                  arguments:
+                    to: source('raw', 'categories')
+                    field: category_id
           - name: uom_id
             description: Ссылка на единицу измерения.
             tests:
               - not_null
               - relationships:
                   arguments:
-                    to: ref("units_of_measure")
+                    to: source('raw', 'units_of_measure')
                     field: uom_id
           - name: price
             description: Текущая розничная цена в магазине.
             tests:
               - not_null
+              - dbt_utils.accepted_range:
+                  arguments:
+                    min_value: 0
+                    inclusive: false
           - name: is_active
             description: Продаётся ли товар в настоящее время.
             tests:
@@ -138,3 +170,56 @@ sources:
                     values: [true, false]
           - name: updated_at
             description: Дата обновления (для инкрементальной загрузки).
+            tests:
+              - not_null
+
+      - name: categories
+        description: Категории товаров.
+        columns:
+          - name: category_id
+            description: Уникальный идентификатор категории.
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: Наименование категории.
+            tests:
+              - not_null
+              - unique
+              - dbt_utils.not_empty_string
+
+      - name: statuses
+        description: Статусы товаров.
+        columns:
+          - name: status_id
+            description: Уникальный идентификатор статуса.
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: Наименование статуса.
+            tests:
+              - not_null
+              - unique
+              - dbt_utils.not_empty_string
+              
+      - name: units_of_measure
+        description: Единицы измерения товаров.
+        columns:
+          - name: uom_id
+            description: Уникальный идентификатор статуса.
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: Наименование единицы измерения.
+            tests:
+              - not_null
+              - unique
+              - dbt_utils.not_empty_string
+          - name: short_name
+            description: Сокращённое наименование единицы измерения.
+            tests:
+              - not_null
+              - unique
+              - dbt_utils.not_empty_string
