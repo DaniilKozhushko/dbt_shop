@@ -18,23 +18,3 @@ models:
   shop:
     staging:
       +materialized: view
-
-seeds:
-  shop:
-    +enabled: true
-
-    categories:
-      +column_types:
-        category_id: int
-        name: varchar(50)
-    
-    statuses:
-      +column_types:
-        status_id: int
-        name: varchar(50)
-
-    units_of_measure:
-      +column_types:
-        uom_id: int
-        name: varchar(50)
-        short_name: varchar(10)

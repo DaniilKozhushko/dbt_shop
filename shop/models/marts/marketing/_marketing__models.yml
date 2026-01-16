@@ -1,0 +1,65 @@
+models:
+  - name: dim_customer_rfm
+    description: "RFM сегментация клиентов для маркетинга"
+    
+    config:
+      contract:
+        enforced: true
+        
+    columns:
+      - name: user_id
+        data_type: integer
+        description: PK клиента
+        constraints:
+          - type: primary_key
+          - type: not_null
+        tests:
+          - unique
+          - not_null
+
+      - name: first_order_date
+        data_type: timestamp
+        
+      - name: last_order_date
+        data_type: timestamp
+        
+      - name: frequency
+        data_type: bigint
+        
+      - name: monetary_value
+        data_type: numeric(19, 2)
+        tests:
+          - is_greater_than:
+              arguments:
+                value: 0
+        
+      - name: customer_segment
+        data_type: text
+        tests:
+          - accepted_values:
+              values: ['VIP', 'Regular', 'Newbie']
+              config:
+                severity: error
+    unit_tests:
+      - name: test_rfm_logic_vip
+        description: "Проверка, что клиент с суммой > 5000 становится VIP"
+        model: dim_customer_rfm
+        given:
+          - input: ref('int_sales_enriched')
+            rows:
+              - {user_id: 1, total_amount_local: 6000, order_date: '2025-01-01'}
+              - {user_id: 1, total_amount_local: 100,  order_date: '2025-02-01'} 
+        expect:
+          rows:
+            - {user_id: 1, monetary_value: 6100, customer_segment: 'VIP'}
+
+      - name: test_rfm_logic_newbie
+        description: "Проверка, что клиент с малой суммой становится Newbie"
+        model: dim_customer_rfm
+        given:
+          - input: ref('int_sales_enriched')
+            rows:
+              - {user_id: 2, total_amount_local: 500, order_date: '2025-01-01'}
+        expect:
+          rows:
+            - {user_id: 2, monetary_value: 500, customer_segment: 'Newbie'}
